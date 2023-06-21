@@ -19,6 +19,7 @@ class CreateNotesTable extends Migration
             $table->string('fio');
             $table->string('company');
             $table->string('email');
+            $table->string('phone');
             $table->date('date_birth');
             $table->string('photo');
         });
