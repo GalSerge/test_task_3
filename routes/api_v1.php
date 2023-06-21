@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\V1\ApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes V1
@@ -13,4 +14,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/', [ApiController::class, 'index']);
+
+Route::get('/notebook', [ApiController::class, 'get_notes']);
 
