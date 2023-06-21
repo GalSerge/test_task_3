@@ -14,6 +14,10 @@ class NotebookResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'note_id' => $this->id,
+            'fio' => $this->fio,
+            'company' => $this->company
+        ];
     }
 }
