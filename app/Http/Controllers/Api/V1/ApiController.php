@@ -22,6 +22,7 @@ class ApiController extends Controller
     public function get_notes(Request $request)
     {
         $notes = Notes::select('*')
+            ->orderBy('created_at', 'desc')
             ->offset($request->input('offset', '0'))
             ->limit($request->input('limit', '10'))
             ->get();
