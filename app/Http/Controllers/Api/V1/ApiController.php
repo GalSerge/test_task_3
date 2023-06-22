@@ -11,6 +11,7 @@ class ApiController extends Controller
 {
     /**
      * Обрабатывает тестовый маршрут
+     *
      * @param Request $request
      * @return int
      */
@@ -50,7 +51,19 @@ class ApiController extends Controller
             return new NotebookResource($note);
         else
             return response(['msg' => 'Заметка отсутствует'], 404);
+    }
 
+    public function edit_note(Request $request, int $id)
+    {
+        $status = $this->validate_request($request);
+
+        if ($status)
+        {
+            Notes::where('id', $id)
+                ->update($request->toArray());
+            return response(['msg' => 'Заметка изменена'], 200);
+        } else
+            return response(['msg' => 'Неверный формат данных'], 400);
     }
 
     public function validate_request(Request $request)
