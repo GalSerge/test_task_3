@@ -92,6 +92,25 @@ class ApiController extends Controller
     }
 
     /**
+     * Удаляет заметку
+     *
+     * @param int $id идентификатор заметки
+     * @return mixed
+     */
+    public function delete_note(int $id)
+    {
+        $note = Notes::find($id);
+
+        if ($note !== null)
+        {
+            $note->delete();
+            return response(['msg' => 'Заметка удалена'], 200);
+        }
+        else
+            return response(['msg' => 'Заметка отсутствует'], 404);
+    }
+
+    /**
      * Проверяет корректность полученных из формы данных
      *
      * @param Request $request данные формы
