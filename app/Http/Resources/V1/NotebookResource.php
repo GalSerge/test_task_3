@@ -17,7 +17,10 @@ class NotebookResource extends JsonResource
         return [
             'note_id' => $this->id,
             'fio' => $this->fio,
-            'company' => $this->company
+            'company' => $this->company,
+            'email' => $this->email,
+            'phone' => $this->date_birth,
+            'photo' => $this->photo
         ];
     }
 }
