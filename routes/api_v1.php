@@ -23,3 +23,5 @@ Route::post('/notebook', [ApiController::class, 'add_note']);
 Route::get('/notebook/{id}', [ApiController::class, 'get_one_note']);
 Route::post('/notebook/{id}', [ApiController::class, 'edit_note']);
 
+Route::delete('/notebook/{id}', [ApiController::class, 'delete_note']);
+
