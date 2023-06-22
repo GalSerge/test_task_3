@@ -20,6 +20,12 @@ class ApiController extends Controller
         return 1;
     }
 
+    /**
+     * Возвращает список заметок
+     *
+     * @param Request $request ожидаются параметры offset и limit
+     * @return mixed
+     */
     public function get_notes(Request $request)
     {
         $notes = Notes::select('*')
@@ -31,6 +37,12 @@ class ApiController extends Controller
         return NotebookResource::collection($notes);
     }
 
+    /**
+     * Добавляет новую заметку
+     *
+     * @param Request $request данные формы
+     * @return mixed
+     */
     public function add_note(Request $request)
     {
         $status = $this->validate_request($request);
@@ -43,6 +55,12 @@ class ApiController extends Controller
             return response(['msg' => 'Неверный формат данных'], 400);
     }
 
+    /**
+     * Возвращает одну заметку
+     *
+     * @param int $id идентификатор заметки
+     * @return NotebookResource
+     */
     public function get_one_note(int $id)
     {
         $note = Notes::where('id', $id)->first();
@@ -53,6 +71,13 @@ class ApiController extends Controller
             return response(['msg' => 'Заметка отсутствует'], 404);
     }
 
+    /**
+     * Редактирует заметку
+     *
+     * @param Request $request данные формы
+     * @param int $id идентификатор заметки
+     * @return mixed
+     */
     public function edit_note(Request $request, int $id)
     {
         $status = $this->validate_request($request);
@@ -66,6 +91,12 @@ class ApiController extends Controller
             return response(['msg' => 'Неверный формат данных'], 400);
     }
 
+    /**
+     * Проверяет корректность полученных из формы данных
+     *
+     * @param Request $request данные формы
+     * @return bool
+     */
     public function validate_request(Request $request)
     {
         try
