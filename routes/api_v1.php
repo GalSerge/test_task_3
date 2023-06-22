@@ -18,4 +18,5 @@ use App\Http\Controllers\Api\V1\ApiController;
 Route::get('/', [ApiController::class, 'index']);
 
 Route::get('/notebook', [ApiController::class, 'get_notes']);
+Route::post('/notebook', [ApiController::class, 'add_note']);
 
