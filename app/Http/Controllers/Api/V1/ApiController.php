@@ -42,6 +42,17 @@ class ApiController extends Controller
             return response(['msg' => 'Неверный формат данных'], 400);
     }
 
+    public function get_one_note(int $id)
+    {
+        $note = Notes::where('id', $id)->first();
+
+        if ($note !== null)
+            return new NotebookResource($note);
+        else
+            return response(['msg' => 'Заметка отсутствует'], 404);
+
+    }
+
     public function validate_request(Request $request)
     {
         try
