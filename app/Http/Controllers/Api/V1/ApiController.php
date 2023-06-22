@@ -29,4 +29,36 @@ class ApiController extends Controller
 
         return NotebookResource::collection($notes);
     }
+
+    public function add_note(Request $request)
+    {
+        $status = $this->validate_request($request);
+
+        if ($status)
+        {
+            Notes::create($request->toArray());
+            return response(['msg' => 'Заметка добавлена'], 200);
+        } else
+            return response(['msg' => 'Неверный формат данных'], 400);
+    }
+
+    public function validate_request(Request $request)
+    {
+        try
+        {
+            $request->validate([
+                'fio' => 'required|max:255',
+                'company' => 'max:255',
+                'email' => 'required|max:255',
+                'phone' => 'required|max:255',
+                'date_birth' => 'nullable|date',
+                'photo' => 'max:255'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
