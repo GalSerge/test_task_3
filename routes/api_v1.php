@@ -20,3 +20,5 @@ Route::get('/', [ApiController::class, 'index']);
 Route::get('/notebook', [ApiController::class, 'get_notes']);
 Route::post('/notebook', [ApiController::class, 'add_note']);
 
+Route::get('/notebook/{id}', [ApiController::class, 'get_one_note']);
+
