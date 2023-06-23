@@ -17,11 +17,11 @@ use App\Http\Controllers\Api\V1\ApiController;
 
 Route::get('/', [ApiController::class, 'index']);
 
-Route::get('/notebook', [ApiController::class, 'get_notes']);
-Route::post('/notebook', [ApiController::class, 'add_note']);
+Route::get('/notebook', [ApiController::class, 'getNotes']);
+Route::post('/notebook', [ApiController::class, 'addNote']);
 
-Route::get('/notebook/{id}', [ApiController::class, 'get_one_note']);
-Route::post('/notebook/{id}', [ApiController::class, 'edit_note']);
+Route::get('/notebook/{id}', [ApiController::class, 'getOneNote']);
+Route::post('/notebook/{id}', [ApiController::class, 'editNote']);
 
-Route::delete('/notebook/{id}', [ApiController::class, 'delete_note']);
+Route::delete('/notebook/{id}', [ApiController::class, 'deleteNote']);
 
