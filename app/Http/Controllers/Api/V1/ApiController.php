@@ -26,7 +26,7 @@ class ApiController extends Controller
      * @param Request $request ожидаются параметры offset и limit
      * @return mixed
      */
-    public function get_notes(Request $request)
+    public function getNotes(Request $request)
     {
         $notes = Notes::select('*')
             ->orderBy('created_at', 'desc')
@@ -43,13 +43,17 @@ class ApiController extends Controller
      * @param Request $request данные формы
      * @return mixed
      */
-    public function add_note(Request $request)
+    public function addNote(Request $request)
     {
-        $status = $this->validate_request($request);
+        $status = $this->validateRequest($request);
 
         if ($status)
         {
-            Notes::create($request->toArray());
+            $data = $request->toArray();
+            if (isset($data['photo']))
+                $data['photo'] = $request->file('photo')->store('photos');
+
+            Notes::create($data);
             return response(['msg' => 'Заметка добавлена'], 200);
         } else
             return response(['msg' => 'Неверный формат данных'], 400);
@@ -61,7 +65,7 @@ class ApiController extends Controller
      * @param int $id идентификатор заметки
      * @return NotebookResource
      */
-    public function get_one_note(int $id)
+    public function getOneNote(int $id)
     {
         $note = Notes::where('id', $id)->first();
 
@@ -78,14 +82,18 @@ class ApiController extends Controller
      * @param int $id идентификатор заметки
      * @return mixed
      */
-    public function edit_note(Request $request, int $id)
+    public function editNote(Request $request, int $id)
     {
-        $status = $this->validate_request($request);
+        $status = $this->validateRequest($request);
 
         if ($status)
         {
+            $data = $request->toArray();
+            if (isset($data['photo']))
+                $data['photo'] = $request->file('photo')->store('photos');
+
             Notes::where('id', $id)
-                ->update($request->toArray());
+                ->update($data);
             return response(['msg' => 'Заметка изменена'], 200);
         } else
             return response(['msg' => 'Неверный формат данных'], 400);
@@ -97,7 +105,7 @@ class ApiController extends Controller
      * @param int $id идентификатор заметки
      * @return mixed
      */
-    public function delete_note(int $id)
+    public function deleteNote(int $id)
     {
         $note = Notes::find($id);
 
@@ -116,7 +124,7 @@ class ApiController extends Controller
      * @param Request $request данные формы
      * @return bool
      */
-    public function validate_request(Request $request)
+    public function validateRequest(Request $request)
     {
         try
         {
@@ -126,7 +134,7 @@ class ApiController extends Controller
                 'email' => 'required|max:255',
                 'phone' => 'required|max:255',
                 'date_birth' => 'nullable|date',
-                'photo' => 'max:255'
+                'photo' => 'image|mimes:jpeg,png,jpg'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e)
         {
