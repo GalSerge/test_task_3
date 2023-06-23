@@ -21,6 +21,18 @@ class ApiController extends Controller
     }
 
     /**
+     *
+     * @OA\Get(
+     *      path="/api/v1/notebook",
+     *      operationId="notebookGetAll",
+     *      tags={"Main"},
+     *      summary="Получить список заметок",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       )
+     *     )
+     *
      * Возвращает список заметок
      *
      * @param Request $request ожидаются параметры offset и limit
@@ -38,6 +50,19 @@ class ApiController extends Controller
     }
 
     /**
+     *
+     * @OA\Post(
+     *      path="/api/v1/notebook",
+     *      operationId="notebookAddNote",
+     *      tags={"Main"},
+     *      summary="Добавить заметку",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(response=400, description="Bad request")
+     *     )
+     *
      * Добавляет новую заметку
      *
      * @param Request $request данные формы
@@ -60,6 +85,27 @@ class ApiController extends Controller
     }
 
     /**
+     *
+     * @OA\Get(
+     *      path="/api/v1/notebook/{id}",
+     *      operationId="notebookGetOneNote",
+     *      tags={"Main"},
+     *      summary="Получить заметку",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Идентификатор заметки",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     *     )
      * Возвращает одну заметку
      *
      * @param int $id идентификатор заметки
@@ -76,6 +122,28 @@ class ApiController extends Controller
     }
 
     /**
+     *
+     * @OA\Post(
+     *      path="/api/v1/notebook/{id}",
+     *      operationId="notebookEditNote",
+     *      tags={"Main"},
+     *      summary="Редактировать заметку",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Идентификатор заметки",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(response=400, description="Bad request")
+     *     )
+     *
      * Редактирует заметку
      *
      * @param Request $request данные формы
@@ -100,6 +168,28 @@ class ApiController extends Controller
     }
 
     /**
+     *
+     * @OA\Delete(
+     *      path="/api/v1/notebook/{id}",
+     *      operationId="notebookDeleteNote",
+     *      tags={"Main"},
+     *      summary="Удалить заметку",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Идентификатор заметки",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     *     )
+     *
      * Удаляет заметку
      *
      * @param int $id идентификатор заметки
@@ -113,8 +203,7 @@ class ApiController extends Controller
         {
             $note->delete();
             return response(['msg' => 'Заметка удалена'], 200);
-        }
-        else
+        } else
             return response(['msg' => 'Заметка отсутствует'], 404);
     }
 
